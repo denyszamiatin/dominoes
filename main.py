@@ -1,5 +1,4 @@
 print("Hello!")
-print ('Hello World!!!')
 
 i = 0
 while i < 10:
@@ -7,3 +6,4 @@ while i < 10:
     i += 1
 
 #v.from Dima
+# v.1.0
