@@ -1,9 +1,8 @@
-print("Hello!")
+while True:
+    try:
+        players_number = int(input('Enter number of players: '))
+        break
+    except ValueError:
+        print('Invalid number')
 
-i = 0
-while i < 10:
-    print(i)
-    i += 1
-
-#v.from Dima
-# v.1.0
+print(players_number, 'players')
