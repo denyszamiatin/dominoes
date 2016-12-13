@@ -18,14 +18,13 @@ def players_profile(players_number):
         players_profile.append(dominoes_dealing(dominoes_list))  # the name of function depends on issue 5 and 1
     return(players_profile)
 
-def firstStep(full_list):
+def firstStep(players_profile):
+    full_list = players_profile
     double_list = []
-    double = k = 0
+    k = 0
     for user_list in full_list:
         for num in user_list:
-            if num[0] == num[1]:
-                double = num[0]
-                double_list.append(double)
+            if num[0] == num[1]: double_list.append(num[0])
 
     min = double_list[0]
     for i in double_list:
