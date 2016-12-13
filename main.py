@@ -7,5 +7,27 @@ def playersNumber():
             print('Invalid number')
 
     print(players_number, 'players')
+    return players_number
 
 playersNumber()
+
+def firstStep(full_list):
+    double_list = []
+    double = k = 0
+    for user_list in full_list:
+        for num in user_list:
+            if num[0] == num[1]:
+                double = num[0]
+                double_list.append(double)
+
+    min = double_list[0]
+    for i in double_list:
+        if min > i:
+            min = i
+    print('minimal bone is - ', min)
+    while k < len(double_list):
+        if double_list[k] == min:
+            player_start = k + 1
+        k += 1
+    print('player', player_start, 'please start the game')
+    return player_start
