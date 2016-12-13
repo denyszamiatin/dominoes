@@ -15,7 +15,7 @@ def players_profile(players_number):
     i = 0
     players_profile = []
     for i in range(players_number):
-        players_profile.append(dominoes_dealing(dominoes_list)) # the name of function depends on issue 5 and 1
+        players_profile.append(dominoes_dealing(dominoes_list))  # the name of function depends on issue 5 and 1
     return(players_profile)
 
 def firstStep(full_list):
