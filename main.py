@@ -20,24 +20,11 @@ def players_profile(players_number):
 def firstStep(players_profile):
     full_list = players_profile
     double_list = []
-    k = 0
     for user_list in full_list:
         for num in user_list:
             if num[0] == num[1]: double_list.append(num[0])
-
-    min = double_list[0]
-    for i in double_list:
-        if min > i:
-            min = i
-    print('minimal bone is - ', min)
-    while k < len(double_list):
-        if double_list[k] == min:
-            player_start = k + 1
-        k += 1
+    min_b = min(double_list)
+    player_start = double_list.index(min_b) + 1
+    print('minimal bone is - ', min_b)
     print('player', player_start, 'please start the game')
     return player_start
-
-dominoes_list = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,0],[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],
-[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[3,0],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[4,0],
-[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[5,0],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[6,0],[6,1],
-[6,2],[6,3],[6,4],[6,5],[6,6]]
