@@ -13,7 +13,6 @@ while True:
     if 2 <= (playersNumber()) <=4:
         break
     print('Game allow 2-4 players')
-    continue
 
 def players_profile(players_number):
     players_profile = []
