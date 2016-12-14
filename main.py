@@ -2,12 +2,13 @@ def playersNumber():
     while True:
         try:
             players_number = int(input('Enter number of players: '))
-            break
+            if players_number > 1 and players_number < 5:
+                return players_number
+            else:
+                print('Game allow 2-4 players')
+                continue
         except ValueError:
             print('Invalid number')
-
-    print(players_number, 'players')
-    return players_number
 
 playersNumber()
 
