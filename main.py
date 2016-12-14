@@ -2,15 +2,18 @@ def playersNumber():
     while True:
         try:
             players_number = int(input('Enter number of players: '))
-            if players_number > 1 and players_number < 5:
-                return players_number
-            else:
-                print('Game allow 2-4 players')
-                continue
+            break
         except ValueError:
             print('Invalid number')
 
-playersNumber()
+    print(players_number, 'players')
+    return players_number
+
+while True:
+    if 2 <= (playersNumber()) <=4:
+        break
+    print('Game allow 2-4 players')
+    continue
 
 def players_profile(players_number):
     players_profile = []
