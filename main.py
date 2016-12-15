@@ -1,5 +1,5 @@
 # https://domino.keft.ru/help - правила игры
-
+import random
 import itertools
 
 
@@ -18,7 +18,7 @@ def get_dominoes():
 
 
 dominoes = get_dominoes()
-
+random.shuffle(dominoes)
 
 def get_bones(count):
     global dominoes
