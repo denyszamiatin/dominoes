@@ -66,3 +66,16 @@ def find_doubles(players_bones):
             if pair in players_bones[index]:
                 return index
     raise IndexError                         # returns Error if no doubles found
+
+def find_player_with_max_points(players_bones):
+    max_points = 0
+    id_player = 0
+    for i in players_bones:
+        points_of_player = 0    
+        for j in i:
+            points_of_player += sum(j)
+        if max_points < points_of_player:
+            max_points = points_of_player
+            id_player_with_max_points = id_player
+        id_player += 1
+    return id_player_with_max_points
