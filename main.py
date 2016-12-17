@@ -65,6 +65,4 @@ def find_doubles(players_bones):
         for index in range(len(players_bones)):
             if pair in players_bones[index]:
                 return index
-    return False
-
-first_player_index = find_doubles(players_bones)  # returns False if no doubles found
+    raise IndexError                         # returns Error if no doubles found
