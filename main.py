@@ -54,3 +54,17 @@ def firstStep(players_profile):
     print('minimal bone is - ', min_b)
     print('player', player_start, 'please start the game')
     return player_start
+
+
+players_now_num = input_players_number()
+players_bones = get_players(players_now_num) #list of lists of bones
+
+def find_doubles(players_bones):
+    doubles = [(1, 1),(2,2),(3,3),(4,4),(5,5),(0,0)]
+    for pair in doubles:
+        for index in range(len(players_bones)):
+            if pair in players_bones[index]:
+                return index
+    return False
+
+first_player_index = find_doubles(players_bones)  # returns False if no doubles found
