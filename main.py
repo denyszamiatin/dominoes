@@ -95,6 +95,7 @@ def choose_bone(player_index_first_to_go, players_bones):
                 placing_dominoes(player_index_first_to_go, bone_chosen_index)
                 break
 
+
 # issue 14 написано для тестирования choose_bone
 # необходимо сделать и удалить комментарий
 def validate_bone(bone_index):
@@ -107,6 +108,10 @@ def placing_dominoes(current_player, index_players_bone):
     current_players_bones.delete[index_players_bone-1]
     bones_on_table = bones_on_table.insert(0, players_bone)
     return players_bones, bones_on_table
+
+
+def sort_bone(bone):
+    return bone.reverse()
 
 
 dominoes = get_dominoes()
