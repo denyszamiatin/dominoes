@@ -55,8 +55,8 @@ def first_step(players_profile):
     return player_start
 
 
-def find_doubles(players_bones): # соблюдаем pep8: две строки сверху и снизу от функции
-    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 0)] # соблюдаем pep8: пробелы после запятой
+def find_doubles(players_bones):  # соблюдаем pep8: две строки сверху и снизу от функции
+    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 0)]  # соблюдаем pep8: пробелы после запятой
     for pair in doubles:
         for index in range(len(players_bones)):
             if pair in players_bones[index]:
@@ -81,11 +81,20 @@ def find_player_with_max_points(players_bones):
     return ID_PLAYER_WITH_MAX_POINTS
 
 
+def placing_dominoes(current_player, index_players_bone):
+    current_players_bones = players_bones[current_player]
+    players_bone = current_players_bones[index_players_bone-1]
+    current_players_bones.delete[index_players_bone-1]
+    bones_on_table = bones_on_table.insert(0, players_bone)
+    return players_bones, bones_on_table
+
+
 dominoes = get_dominoes()
 random.shuffle(dominoes)
 
 players_now_num = input_players_number()
-players_bones = get_players(players_now_num) # list of lists of bones
+players_bones = get_players(players_now_num)  # list of lists of bones
+bones_on_table = []  # empty list for bones on the table
 
 
-# кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
+#  кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
