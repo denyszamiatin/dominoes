@@ -114,6 +114,11 @@ def sort_bone(bone):
     return bone.reverse()
 
 
+def print_bones_on_table():
+    global bones_on_table
+    print("Current bones on table:\n", bones_on_table)
+
+
 dominoes = get_dominoes()
 random.shuffle(dominoes)
 
