@@ -10,6 +10,7 @@ PAIRS = 2
 MIN_PLAYERS_NUMBER = 2
 MAX_PLAYERS_NUMBER = 4
 FIRST_BONES_NUMBER = 7
+ID_PLAYER_WITH_MAX_POINTS = 0
 
 
 def get_dominoes():
@@ -18,9 +19,6 @@ def get_dominoes():
         PAIRS
     ))
 
-
-dominoes = get_dominoes() # перенести эти две строки в самый низ, после описания всех функций
-random.shuffle(dominoes)
 
 def get_bones(count): # соблюдаем pep8: две строки сверху и снизу от функции
     global dominoes
@@ -44,8 +42,7 @@ def get_players(players_number):
     return [get_bones(FIRST_BONES_NUMBER) for _ in range(players_number)]
 
 
-def firstStep(players_profile): # CamelCase только для классов
-    player_start = 0 # переменную не нужно объявлять в начале, она будет создана в момент присваивания ниже.
+def first_step(players_profile):
     full_list = players_profile
     double_list = []
     for user_list in full_list:
@@ -58,11 +55,8 @@ def firstStep(players_profile): # CamelCase только для классов
     return player_start
 
 
-players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
-players_bones = get_players(players_now_num) # list of lists of bones
-
 def find_doubles(players_bones): # соблюдаем pep8: две строки сверху и снизу от функции
-    doubles = [(1, 1),(2,2),(3,3),(4,4),(5,5),(0,0)] # соблюдаем pep8: пробелы после запятой
+    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 0)] # соблюдаем pep8: пробелы после запятой
     for pair in doubles:
         for index in range(len(players_bones)):
             if pair in players_bones[index]:
@@ -82,8 +76,15 @@ def find_player_with_max_points(players_bones):
             points_of_player += sum(j)
         if max_points < points_of_player:
             max_points = points_of_player
-            id_player_with_max_points = id_player
+            ID_PLAYER_WITH_MAX_POINTS = id_player
         id_player += 1
-    return id_player_with_max_points # данная переменная объявляется внутри цикла и условного оператора, ей необходимо начальное значение на случай, если условия не будут выполнены.
+    return ID_PLAYER_WITH_MAX_POINTS
+
+
+players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
+players_bones = get_players(players_now_num) # list of lists of bones
+
+dominoes = get_dominoes() # перенести эти две строки в самый низ, после описания всех функций
+random.shuffle(dominoes)
 
 # кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
