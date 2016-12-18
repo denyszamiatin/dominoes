@@ -42,19 +42,6 @@ def get_players(players_number):
     return [get_bones(FIRST_BONES_NUMBER) for _ in range(players_number)]
 
 
-def first_step(players_profile):
-    full_list = players_profile
-    double_list = []
-    for user_list in full_list:
-        for num in user_list:
-            if num[0] == num[1]: double_list.append(num[0])
-    min_b = min(double_list)
-    player_start = double_list.index(min_b) + 1
-    print('minimal bone is - ', min_b)
-    print('player', player_start, 'please start the game')
-    return player_start
-
-
 def find_doubles(players_bones): # соблюдаем pep8: две строки сверху и снизу от функции
     doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 0)] # соблюдаем pep8: пробелы после запятой
     for pair in doubles:
@@ -79,6 +66,13 @@ def find_player_with_max_points(players_bones):
             ID_PLAYER_WITH_MAX_POINTS = id_player
         id_player += 1
     return ID_PLAYER_WITH_MAX_POINTS
+
+
+def goes_first(double_min, points_max):
+    if double_min:
+        print('first goes player with double %d') % double_min
+    else:
+        print('first goes player with most points %d') % points_max
 
 
 players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
