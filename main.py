@@ -84,6 +84,19 @@ def goes_first(double_min, points_max):
         print('first goes player with most points %d' % points_max)
 
 
+def choose_bone(player_index_first_to_go, players_bones):
+    for bone in (players_bones[player_index_first_to_go:] + players_bones[:player_index_first_to_go]):
+        while True:
+            print("You have the following bones\n", bone)
+            bone_chosen_index = input("Please select bone's index to go: ")
+            if validate_bone(bone_chosen_index): # I suppose here should come bone validation from issue #14
+                placing_dominoes(player_index_first_to_go, bone_chosen_index)
+                break
+
+def validate_bone(bone_index):
+    return True
+
+
 def placing_dominoes(current_player, index_players_bone):
     current_players_bones = players_bones[current_player]
     players_bone = current_players_bones[index_players_bone-1]
@@ -98,5 +111,4 @@ random.shuffle(dominoes)
 players_now_num = input_players_number()
 players_bones = get_players(players_now_num)  # list of lists of bones
 bones_on_table = []  # empty list for bones on the table
-
-
+choose_bone(2, players_bones)
