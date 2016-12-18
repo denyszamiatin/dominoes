@@ -93,6 +93,8 @@ def choose_bone(player_index_first_to_go, players_bones):
                 placing_dominoes(player_index_first_to_go, bone_chosen_index)
                 break
 
+# issue 14 написано для тестирования choose_bone
+# необходимо сделать и удалить комментарий
 def validate_bone(bone_index):
     return True
 
