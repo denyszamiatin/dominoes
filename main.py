@@ -55,16 +55,12 @@ def first_step(players_profile):
     return player_start
 
 
-def find_doubles(players_bones):  # соблюдаем pep8: две строки сверху и снизу от функции
-    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (0, 0)]  # соблюдаем pep8: пробелы после запятой
+def find_doubles(players_bones):
+    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (0, 0)]
     for pair in doubles:
         for index in range(len(players_bones)):
             if pair in players_bones[index]:
                 return index
-    raise IndexError                         # returns Error if no doubles found
-# отсутствие дублей у игрока не нарушает правила игры в домино и не должно вызывать ошибку в программе
-# "Если дублей нет вообще, то ход с кости 5-6, и так далее по убыванию значений костей."
-# поэтому лучше просто убрать raise. Если ничего не найдено, функция возвратит None, что соответствует правилам игры
 
 
 def find_player_with_max_points(players_bones):
@@ -104,4 +100,3 @@ players_bones = get_players(players_now_num)  # list of lists of bones
 bones_on_table = []  # empty list for bones on the table
 
 
-#  кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
