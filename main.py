@@ -119,6 +119,21 @@ def print_bones_on_table():
     print("Current bones on table:\n", bones_on_table)
 
 
+def find_oldest_bone(players_profile):
+    max_bone=0
+    index_profil = 0
+    for profil in players_profile:
+        index_bone=0
+        for i in profil:
+            if max_bone < sum(i):
+                max_bone=sum(i)
+                index_max_bone=index_bone
+                index_profil_witn_max_bone=index_profil
+            index_bone+=1
+        index_profil+=1
+    return index_profil_witn_max_bone, index_max_bone
+
+
 dominoes = get_dominoes()
 random.shuffle(dominoes)
 
