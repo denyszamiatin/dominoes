@@ -20,7 +20,7 @@ def get_dominoes():
     ))
 
 
-def get_bones(count): # соблюдаем pep8: две строки сверху и снизу от функции
+def get_bones(count):
     global dominoes
     bones = dominoes[:count]
     dominoes = dominoes[count:]
@@ -81,10 +81,11 @@ def find_player_with_max_points(players_bones):
     return ID_PLAYER_WITH_MAX_POINTS
 
 
-players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
+dominoes = get_dominoes()
+random.shuffle(dominoes)
+
+players_now_num = input_players_number()
 players_bones = get_players(players_now_num) # list of lists of bones
 
-dominoes = get_dominoes() # перенести эти две строки в самый низ, после описания всех функций
-random.shuffle(dominoes)
 
 # кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
