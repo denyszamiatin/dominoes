@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# чтобы писать кирилицей, необходимо первой строкой указать 'coding: utf-8' как выше
 # https://domino.keft.ru/help - правила игры
 import random
 import itertools
@@ -17,10 +19,10 @@ def get_dominoes():
     ))
 
 
-dominoes = get_dominoes()
+dominoes = get_dominoes() # перенести эти две строки в самый низ, после описания всех функций
 random.shuffle(dominoes)
 
-def get_bones(count):
+def get_bones(count): # соблюдаем pep8: две строки сверху и снизу от функции
     global dominoes
     bones = dominoes[:count]
     dominoes = dominoes[count:]
@@ -42,8 +44,8 @@ def get_players(players_number):
     return [get_bones(FIRST_BONES_NUMBER) for _ in range(players_number)]
 
 
-def firstStep(players_profile):
-    player_start = 0
+def firstStep(players_profile): # CamelCase только для классов
+    player_start = 0 # переменную не нужно объявлять в начале, она будет создана в момент присваивания ниже.
     full_list = players_profile
     double_list = []
     for user_list in full_list:
@@ -56,16 +58,20 @@ def firstStep(players_profile):
     return player_start
 
 
-players_now_num = input_players_number()
+players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
 players_bones = get_players(players_now_num) # list of lists of bones
 
-def find_doubles(players_bones):
-    doubles = [(1, 1),(2,2),(3,3),(4,4),(5,5),(0,0)]
+def find_doubles(players_bones): # соблюдаем pep8: две строки сверху и снизу от функции
+    doubles = [(1, 1),(2,2),(3,3),(4,4),(5,5),(0,0)] # соблюдаем pep8: пробелы после запятой
     for pair in doubles:
         for index in range(len(players_bones)):
             if pair in players_bones[index]:
                 return index
     raise IndexError                         # returns Error if no doubles found
+# отсутствие дублей у игрока не нарушает правила игры в домино и не должно вызывать ошибку в программе
+# "Если дублей нет вообще, то ход с кости 5-6, и так далее по убыванию значений костей."
+# поэтому лучше просто убрать raise. Если ничего не найдено, функция возвратит None, что соответствует правилам игры
+
 
 def find_player_with_max_points(players_bones):
     max_points = 0
@@ -78,4 +84,6 @@ def find_player_with_max_points(players_bones):
             max_points = points_of_player
             id_player_with_max_points = id_player
         id_player += 1
-    return id_player_with_max_points
+    return id_player_with_max_points # данная переменная объявляется внутри цикла и условного оператора, ей необходимо начальное значение на случай, если условия не будут выполнены.
+
+# кто исправит, пожалуйста, удалите соотв. комментарий, этот в последнюю очередь.
