@@ -113,4 +113,3 @@ random.shuffle(dominoes)
 players_now_num = input_players_number()
 players_bones = get_players(players_now_num)  # list of lists of bones
 bones_on_table = []  # empty list for bones on the table
-choose_bone(2, players_bones)
