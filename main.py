@@ -82,6 +82,8 @@ def goes_first(double_min, points_max):
         print('first goes player with double %d' % double_min)
     else:
         print('first goes player with most points %d' % points_max)
+# мне кажется необходимо добавить return индекса игрока, который будет ходить первым
+# этот индекс будет использоваться в других функциях
 
 
 def choose_bone(player_index_first_to_go, players_bones):
