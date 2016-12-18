@@ -75,6 +75,9 @@ def goes_first(double_min, points_max):
         print('first goes player with most points %d') % points_max
 
 
+double_min = find_doubles()
+points_max = find_player_with_max_points()
+
 players_now_num = input_players_number() # перенести эти две строки в самый низ, после описания всех функций
 players_bones = get_players(players_now_num) # list of lists of bones
 
