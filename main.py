@@ -83,9 +83,9 @@ def find_player_with_max_points(players_bones):
 
 def goes_first(double_min, points_max):
     if double_min:
-        print('first goes player with double %d') % double_min
+        print('first goes player with double %d' % double_min)
     else:
-        print('first goes player with most points %d') % points_max
+        print('first goes player with most points %d' % points_max)
 
 
 def placing_dominoes(current_player, index_players_bone):
