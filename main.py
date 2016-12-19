@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# чтобы писать кирилицей, необходимо первой строкой указать 'coding: utf-8' как выше
+# чтобы писать кириллицей, необходимо первой строкой указать 'coding: utf-8' как выше
 # https://domino.keft.ru/help - правила игры
 import random
 import itertools
@@ -11,7 +11,10 @@ MIN_PLAYERS_NUMBER = 2
 MAX_PLAYERS_NUMBER = 4
 FIRST_BONES_NUMBER = 7
 ID_PLAYER_WITH_MAX_POINTS = 0
+LEFT = 0
+RIGHT = 1
 
+bones_on_table = []
 
 def get_dominoes():
     return list(itertools.combinations_with_replacement(
@@ -26,6 +29,9 @@ def get_bones(count):
     dominoes = dominoes[count:]
     return bones
 
+
+def shuffle_dominoes():
+    random.shuffle(dominoes)
 
 def input_players_number():
     while True:
@@ -42,72 +48,65 @@ def get_players(players_number):
     return [get_bones(FIRST_BONES_NUMBER) for _ in range(players_number)]
 
 
-def first_step(players_profile):
-    full_list = players_profile
-    double_list = []
-    for user_list in full_list:
-        for num in user_list:
-            if num[0] == num[1]: double_list.append(num[0])
-    min_b = min(double_list)
-    player_start = double_list.index(min_b) + 1
-    print('minimal bone is - ', min_b)
-    print('player', player_start, 'please start the game')
-    return player_start
+def find_player_with_min_double(players):
+    for double in [(x, x) for x in range(1, MAX_POINTS_COUNT)] + [(0, 0)]:
+        for player, bones in enumerate(players):
+            if double in bones:
+                return double, player
+    raise ValueError('There are no doubles')
 
 
-def find_doubles(players_bones):
-    doubles = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (0, 0)]
-    for pair in doubles:
-        for index in range(len(players_bones)):
-            if pair in players_bones[index]:
-                return index
+def find_player_with_max_points(players):
+    first_player = 0
+    max_bone = (0, 0)
+    for player, bones in enumerate(players):
+        if max(bones) > max_bone:
+            first_player = player
+            max_bone = max(bones)
+    return max_bone, first_player
 
 
-def find_player_with_max_points(players_bones):
-    max_points = 0
-    id_player = 0
-    for i in players_bones:
-        points_of_player = 0    
-        for j in i:
-            points_of_player += sum(j)
-        if max_points < points_of_player:
-            max_points = points_of_player
-            ID_PLAYER_WITH_MAX_POINTS = id_player
-        id_player += 1
-    return ID_PLAYER_WITH_MAX_POINTS
+def get_first_move_player(players):
+    try:
+        return find_player_with_min_double(players)
+    except ValueError:
+        return find_player_with_max_points(players)
 
 
-def goes_first(double_min, points_max):
-    if double_min:
-        print('first goes player with double %d' % double_min)
-    else:
-        print('first goes player with most points %d' % points_max)
-# мне кажется необходимо добавить return индекса игрока, который будет ходить первым
-# этот индекс будет использоваться в других функциях
+def print_player(player):
+    print("You have the following bones\n", player)
 
 
-def choose_bone(player_index_first_to_go, players_bones):
-    for bone in (players_bones[player_index_first_to_go:] + players_bones[:player_index_first_to_go]):
-        while True:
-            print("You have the following bones\n", bone)
-            bone_chosen_index = input("Please select bone's index to go: ")
-            if validate_bone(bone_chosen_index): # I suppose here should come bone validation from issue #14
-                placing_dominoes(player_index_first_to_go, bone_chosen_index)
-                break
+def input_bone_index(player):
+    while True:
+        bone_index = input("Please select bone's index to go: ")
+        if validate_bone(bone_index):
+            return bone_index
 
 
-# issue 14 написано для тестирования choose_bone
-# необходимо сделать и удалить комментарий
+def move(player):
+    print_player(player)
+    bone_index = input_bone_index()
+    player.remove(player[bone_index])
+    place_domino(player[bone_index], LEFT)
+
+
+def game_loop(players):
+    bone, player_to_move = get_first_move_player(players)
+    while True:
+        move(players[player_to_move])
+        player_to_move = (player_to_move + 1) % len(players)
+
+
 def validate_bone(bone_index):
-    return True
+    return True # TODO: write code
 
 
-def placing_dominoes(current_player, index_players_bone):
-    current_players_bones = players_bones[current_player]
-    players_bone = current_players_bones[index_players_bone-1]
-    current_players_bones.delete[index_players_bone-1]
-    bones_on_table = bones_on_table.insert(0, players_bone)
-    return players_bones, bones_on_table
+def place_domino(bone, where):
+    if where == LEFT:
+        bones_on_table.insert(0, bone)
+    else:
+        bones_on_table.append(bone)
 
 
 def sort_bone(bone):
@@ -115,39 +114,11 @@ def sort_bone(bone):
 
 
 def print_bones_on_table():
-    global bones_on_table
     print("Current bones on table:\n", bones_on_table)
 
 
-def find_oldest_bone(players_profile):
-    global index_max_bone
-    max_bone = (0,0)
-    index_profil = 0
-    for profil in players_profile:
-        index_bone = 0
-        for i in profil:
-            if sum(max_bone) < sum(i) and max_bone < i:
-                max_bone = i
-                index_max_bone = index_bone
-                index_profil_witn_max_bone = index_profil
-            index_bone += 1
-        index_profil += 1
-    return index_profil_witn_max_bone, index_max_bone
-
-def find_first_player(players_profile):
-    double_pool = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (0, 0)]
-    for double in double_pool:
-        index_profil = 0
-        for profil in players_profile:
-            if double in profil:
-                print('Goes first player %d' % index_profil)
-                return index_profil
-            index_profil += 1
-    return find_oldest_bone(players_profile)
-
 dominoes = get_dominoes()
-random.shuffle(dominoes)
+
 
 players_now_num = input_players_number()
 players_bones = get_players(players_now_num)  # list of lists of bones
-bones_on_table = []  # empty list for bones on the table
