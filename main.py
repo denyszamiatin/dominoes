@@ -130,8 +130,8 @@ def find_oldest_bone(players_profile):
                 max_bone = i
                 index_max_bone = index_bone
                 index_profil_witn_max_bone = index_profil
-            index_bone + = 1
-        index_profil + = 1
+            index_bone += 1
+        index_profil += 1
     return index_profil_witn_max_bone, index_max_bone
 
 def find_first_player(players_profile):
@@ -142,8 +142,8 @@ def find_first_player(players_profile):
             if double in profil:
                 print('Goes first player %d' % index_profil)
                 return index_profil
-            index_profil + = 1
-    find_oldest_bone(players_profile)
+            index_profil += 1
+    return find_oldest_bone(players_profile)
 
 dominoes = get_dominoes()
 random.shuffle(dominoes)
