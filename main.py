@@ -120,28 +120,29 @@ def print_bones_on_table():
 
 
 def find_oldest_bone(players_profile):
-    max_bone=0
+    global index_max_bone
+    max_bone = (0,0)
     index_profil = 0
     for profil in players_profile:
-        index_bone=0
+        index_bone = 0
         for i in profil:
-            if max_bone < sum(i):
-                max_bone=sum(i)
-                index_max_bone=index_bone
-                index_profil_witn_max_bone=index_profil
-            index_bone+=1
-        index_profil+=1
+            if sum(max_bone) < sum(i) and max_bone < i:
+                max_bone = i
+                index_max_bone = index_bone
+                index_profil_witn_max_bone = index_profil
+            index_bone + = 1
+        index_profil + = 1
     return index_profil_witn_max_bone, index_max_bone
 
 def find_first_player(players_profile):
     double_pool = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (0, 0)]
     for double in double_pool:
-        index_profil=0
+        index_profil = 0
         for profil in players_profile:
             if double in profil:
                 print('Goes first player %d' % index_profil)
                 return index_profil
-            index_profil+=1
+            index_profil + = 1
     find_oldest_bone(players_profile)
 
 dominoes = get_dominoes()
