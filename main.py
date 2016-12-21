@@ -33,6 +33,7 @@ def get_bones(count):
 def shuffle_dominoes():
     random.shuffle(dominoes)
 
+
 def input_players_number():
     while True:
         try:
@@ -115,6 +116,15 @@ def sort_bone(bone):
 
 def print_bones_on_table():
     print("Current bones on table:\n", bones_on_table)
+
+
+def moving_bone(bones_on_table,players_bones):
+    left = bones_on_table[LEFT][LEFT]
+    right = bones_on_table[-RIGHT][RIGHT]
+    print(left, right)
+    for indx, str in enumerate(players_bones):
+        if left in str or right in str:
+            return indx, str
 
 
 dominoes = get_dominoes()
