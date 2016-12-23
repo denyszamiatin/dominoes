@@ -118,13 +118,12 @@ def print_bones_on_table():
     print("Current bones on table:\n", bones_on_table)
 
 
-def moving_bone(bones_on_table,players_bones):
+def moving_bone(bones_on_table, bones):
     left = bones_on_table[LEFT][LEFT]
     right = bones_on_table[-RIGHT][RIGHT]
-    print(left, right)
-    for indx, str in enumerate(players_bones):
-        if left in str or right in str:
-            return indx, str
+    for index, points in enumerate(bones):
+        if left in points or right in points:
+            return index, points
 
 
 dominoes = get_dominoes()
