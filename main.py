@@ -4,7 +4,6 @@
 import random
 import itertools
 
-
 MAX_POINTS_COUNT = 7
 PAIRS = 2
 MIN_PLAYERS_NUMBER = 2
@@ -14,7 +13,14 @@ ID_PLAYER_WITH_MAX_POINTS = 0
 LEFT = 0
 RIGHT = 1
 
-bones_on_table = []
+bones_on_table_list = []
+
+def remove_player_bone(bone_index, player):
+    for key in player.bones_on_table_dict:
+        if bone_index == key:
+            player.bones_on_table_dict.pop(key, None)
+        return None
+
 
 def get_dominoes():
     return list(itertools.combinations_with_replacement(
@@ -88,7 +94,8 @@ def input_bone_index(player):
 def move(player):
     print_player(player)
     bone_index = input_bone_index()
-    player.remove(player[bone_index])
+    remove_player_bone(bone_index, player)
+    # player.remove(player[bone_index])
     place_domino(player[bone_index], LEFT)
 
 
@@ -100,34 +107,33 @@ def game_loop(players):
 
 
 def validate_bone(bone_index):
-    return True # TODO: write code
+    return True  # TODO: write code
 
 
 def place_domino(bone, where):
     if where == LEFT:
-        bones_on_table.insert(0, bone)
+        bones_on_table_list.insert(0, bone)
     else:
-        bones_on_table.append(bone)
+        bones_on_table_list.append(bone)
 
 
 def sort_bone(bone):
     return bone.reverse()
 
 
-def print_bones_on_table():
-    print("Current bones on table:\n", bones_on_table)
+def print_bones_on_table_list():
+    print("Current bones on table:\n", bones_on_table_list)
 
 
-def moving_bone(bones_on_table, bones):
-    left = bones_on_table[LEFT][LEFT]
-    right = bones_on_table[-RIGHT][RIGHT]
+def moving_bone(bones_on_table_list, bones):
+    left = bones_on_table_list[LEFT][LEFT]
+    right = bones_on_table_list[-RIGHT][RIGHT]
     for index, points in enumerate(bones):
         if left in points or right in points:
             return index, points
 
 
 dominoes = get_dominoes()
-
 
 players_now_num = input_players_number()
 players_bones = get_players(players_now_num)  # list of lists of bones
