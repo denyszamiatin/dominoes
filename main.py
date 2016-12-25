@@ -144,7 +144,7 @@ def add_bones_to_dict_of_players():
 def add_priority_to_dict_of_players()
     first_player_index=get_first_move_player(players_bones)
     for player in players_dict:
-        players_dict[player][ 'priority_move']=(player+first_player_index)%len(players_dict)
+        players_dict[player][ 'priority_move']=(player+first_player_index[1])%len(players_dict)
 
 
 dominoes = get_dominoes()
