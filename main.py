@@ -125,6 +125,15 @@ def moving_bone(bones_on_table, bones):
         if left in points or right in points:
             return index, points
 
+def add_player_to_dict_of_players(players_bones_list):
+    counter=0
+    for bones in player_bones_list:
+        players_dict[counter]['bones']=bones
+        counter +=1
+    first_player_index=get_first_move_player(players_bones_list)
+    for player in players_dict:
+        players_dict[player][ 'priority_move']=(player+first_player_index)%len(players_dict)
+
 
 dominoes = get_dominoes()
 
