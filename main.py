@@ -127,56 +127,44 @@ def moving_bone(bones_on_table, bones):
             return index, points
 
 
+players_dict = {}
+
+
 def add_player_to_dict_of_players():
-    counter=0
-    for player in range(players_now_num):
-        players_dict[counter]={}
-        players_dict[counter]['bones']=[]
-        players_dict[counter][ 'priority_move']=None
-        counter +=1
+    for player in range(players_number):
+        players_dict[player]={'bones': [], 'priority_move': None}
 
 
 def add_bones_to_dict_of_players():
-    if len(players_bones)!=players_now_num:
-        raise ValueError('not enough players')
-        for player in range(players_now_num):
-            players_dict[player]['bones']=players_bones[player]
+    if len(players_bones) != players_number:
+        raise ValueError('Not enough players')
+    for player, bones in enumerate(players_bones):
+        players_dict[player]['bones'] = bones
 
 
-def add_priority_to_dict_of_players()
-    first_player_index=get_first_move_player(players_bones)
-    for player in players_dict:
-        players_dict[player][ 'priority_move']=(player-first_player_index[1])%len(players_dict)
+def add_priority_to_dict_of_players():
+    first_player_index = get_first_move_player(players_bones)
+    player_index = 0
+    while player_index < players_number:
+        players_dict[first_player_index % players_number]['priority_move'] =\
+            player_index
+        player_index += 1
+        first_player_index += 1
 
 
 dominoes = get_dominoes()
 
 
-players_now_num = input_players_number()
-players_bones = get_players(players_now_num)  # list of lists of bones
+players_number = input_players_number()
+players_bones = get_players(players_number)  # list of lists of bones
 
 
-def players_queue = sorted(players_dict) # Issue 28
+def is_bones_left(dominoes):
+    return bool(dominoes)
 
-
-def list_players_bones = [j for i in players_bones for j in i]
-    uniq_list_players_bones = set(list_players_bones)
-    for x in uniq_list_players_bones:
-        if left_points_on_table or right_points_on_table != uniq_list_players_bones:
-            if bones_reserve:                                                                   # Issue 27
-                players_bones.append(bones_reserve.pop(random.randint(0,len(bones_reserve)-1)))
-        else:
-            break
-        x += 1
-
-# issue 27 alternative
-def validate_if_bones_left(dominoes):
-    if dominoes: return True
-    else: return False
 
 def add_bone_to_player_if_miss(player):
-    if validate_if_bones_left(dominoes):
-        #player.append(get_bones(NUMBER_OF_BONES_TO_TAKE)[0])
-        player.append(dominoes.pop(random.randint(0, len(dominoes)-1)))
+    if is_bones_left(dominoes):
+        player.append(get_bones(NUMBER_OF_BONES_TO_TAKE)[0])
     else:
-        print("There are no bones left. You miss a go")
+        raise ValueError("There are no bones left. You miss a go")
