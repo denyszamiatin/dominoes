@@ -13,6 +13,7 @@ FIRST_BONES_NUMBER = 7
 ID_PLAYER_WITH_MAX_POINTS = 0
 LEFT = 0
 RIGHT = 1
+NUMBER_OF_BONES_TO_TAKE = 1
 
 bones_on_table = []
 
@@ -167,3 +168,15 @@ def list_players_bones = [j for i in players_bones for j in i]
         else:
             break
         x += 1
+
+# issue 27 alternative
+def validate_if_bones_left(dominoes):
+    if dominoes: return True
+    else: return False
+
+def add_bone_to_player_if_miss(player):
+    if validate_if_bones_left(dominoes):
+        #player.append(get_bones(NUMBER_OF_BONES_TO_TAKE)[0])
+        player.append(dominoes.pop(random.randint(0, len(dominoes)-1)))
+    else:
+        print("There are no bones left. You miss a go")
