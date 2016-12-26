@@ -153,3 +153,17 @@ dominoes = get_dominoes()
 
 players_now_num = input_players_number()
 players_bones = get_players(players_now_num)  # list of lists of bones
+
+
+def players_queue = sorted(players_dict) # Issue 28
+
+
+def list_players_bones = [j for i in players_bones for j in i]
+    uniq_list_players_bones = set(list_players_bones)
+    for x in uniq_list_players_bones:
+        if left_points_on_table or right_points_on_table != uniq_list_players_bones:
+            if bones_reserve:                                                                   # Issue 27
+                players_bones.append(bones_reserve.pop(random.randint(0,len(bones_reserve)-1)))
+        else:
+            break
+        x += 1
