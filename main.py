@@ -126,6 +126,28 @@ def moving_bone(bones_on_table, bones):
             return index, points
 
 
+def add_player_to_dict_of_players():
+    counter=0
+    for player in range(players_now_num):
+        players_dict[counter]={}
+        players_dict[counter]['bones']=[]
+        players_dict[counter][ 'priority_move']=None
+        counter +=1
+
+
+def add_bones_to_dict_of_players():
+    if len(players_bones)!=players_now_num:
+        raise ValueError('not enough players')
+        for player in range(players_now_num):
+            players_dict[player]['bones']=players_bones[player]
+
+
+def add_priority_to_dict_of_players()
+    first_player_index=get_first_move_player(players_bones)
+    for player in players_dict:
+        players_dict[player][ 'priority_move']=(player-first_player_index[1])%len(players_dict)
+
+
 dominoes = get_dominoes()
 
 
