@@ -4,7 +4,6 @@
 import random
 import itertools
 
-
 MAX_POINTS_COUNT = 7
 PAIRS = 2
 MIN_PLAYERS_NUMBER = 2
@@ -16,6 +15,7 @@ RIGHT = 1
 NUMBER_OF_BONES_TO_TAKE = 1
 
 bones_on_table = []
+
 
 def get_dominoes():
     return list(itertools.combinations_with_replacement(
@@ -88,7 +88,7 @@ def input_bone_index(player):
 
 def move(player):
     print_player(player)
-    bone_index = input_bone_index()
+    bone_index = input_bone_index(player)
     player.remove(player[bone_index])
     place_domino(player[bone_index], LEFT)
 
@@ -101,7 +101,7 @@ def game_loop(players):
 
 
 def validate_bone(bone_index):
-    return True # TODO: write code
+    return True  # TODO: write code
 
 
 def place_domino(bone, where):
@@ -132,7 +132,7 @@ players_dict = {}
 
 def add_player_to_dict_of_players():
     for player in range(players_number):
-        players_dict[player]={'bones': [], 'priority_move': None}
+        players_dict[player] = {'bones': [], 'priority_move': None}
 
 
 def add_bones_to_dict_of_players():
@@ -146,14 +146,13 @@ def add_priority_to_dict_of_players():
     first_player_index = get_first_move_player(players_bones)
     player_index = 0
     while player_index < players_number:
-        players_dict[first_player_index % players_number]['priority_move'] =\
+        players_dict[first_player_index % players_number]['priority_move'] = \
             player_index
         player_index += 1
         first_player_index += 1
 
 
 dominoes = get_dominoes()
-
 
 players_number = input_players_number()
 players_bones = get_players(players_number)  # list of lists of bones
