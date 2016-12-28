@@ -54,9 +54,15 @@ def find_player_with_min_double(players):
     for double in [(x, x) for x in range(1, MAX_POINTS_COUNT)] + [(0, 0)]:
         for player, bones in enumerate(players):
             if double in bones:
-                return double, player
+                #return double, player
+                return double, ((player + 1) % len(players)) #см.комментарии ниже
     raise ValueError('There are no doubles')
-
+"""
+в случае нахождения дубля, по правилам необходимо с него и зайти. А в главном цикле и в функции хода, мы предоставляем
+игроку выбрать индекс кости. Таким образом, имея наруках дубль игрок может пойти с другой кости, что противоречит
+правилам игры. Поэтому найденный дубль нужно сразу выложить на стол, а ход передать сразу следующему игроку, который и
+будет выбирать с чего ему ходить.
+"""
 
 def find_player_with_max_points(players):
     first_player = 0
@@ -65,7 +71,8 @@ def find_player_with_max_points(players):
         if max(bones) > max_bone:
             first_player = player
             max_bone = max(bones)
-    return max_bone, first_player
+    #return max_bone, first_player
+    return max_bone, ((first_player + 1) % len(players)) # логика таже, что и функция выше
 
 
 def get_first_move_player(players):
