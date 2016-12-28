@@ -100,8 +100,12 @@ def game_loop(players):
         player_to_move = (player_to_move + 1) % len(players)
 
 
-def validate_bone(bone_index):
-    return True  # TODO: write code
+def validate_bone(bones_on_table, bones):
+    left = bones_on_table[LEFT][LEFT]
+    right = bones_on_table[-RIGHT][RIGHT]
+    for index, points in enumerate(bones):
+        if left or right in points:
+            return True
 
 
 def place_domino(bone, where):
@@ -117,14 +121,6 @@ def sort_bone(bone):
 
 def print_bones_on_table():
     print("Current bones on table:\n", bones_on_table)
-
-
-def moving_bone(bones_on_table, bones):
-    left = bones_on_table[LEFT][LEFT]
-    right = bones_on_table[-RIGHT][RIGHT]
-    for index, points in enumerate(bones):
-        if left in points or right in points:
-            return index, points
 
 
 players_dict = {}
