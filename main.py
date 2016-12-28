@@ -13,7 +13,7 @@ ID_PLAYER_WITH_MAX_POINTS = 0
 LEFT = 0
 RIGHT = 1
 NUMBER_OF_BONES_TO_TAKE = 1
-
+players_dict = {}
 bones_on_table = []
 
 
@@ -54,15 +54,15 @@ def find_player_with_min_double(players):
     for double in [(x, x) for x in range(1, MAX_POINTS_COUNT)] + [(0, 0)]:
         for player, bones in enumerate(players):
             if double in bones:
-                #return double, player
-                return double, ((player + 1) % len(players)) #см.комментарии ниже
+                return double, player  # см.комментарии ниже
     raise ValueError('There are no doubles')
 """
 в случае нахождения дубля, по правилам необходимо с него и зайти. А в главном цикле и в функции хода, мы предоставляем
 игроку выбрать индекс кости. Таким образом, имея наруках дубль игрок может пойти с другой кости, что противоречит
 правилам игры. Поэтому найденный дубль нужно сразу выложить на стол, а ход передать сразу следующему игроку, который и
-будет выбирать с чего ему ходить.
+будет выбирать с чего ему ходить. Изменен главный цикл - game_loop
 """
+
 
 def find_player_with_max_points(players):
     first_player = 0
@@ -71,8 +71,7 @@ def find_player_with_max_points(players):
         if max(bones) > max_bone:
             first_player = player
             max_bone = max(bones)
-    #return max_bone, first_player
-    return max_bone, ((first_player + 1) % len(players)) # логика таже, что и функция выше
+    return max_bone, first_player # логика таже, что и функция выше
 
 
 def get_first_move_player(players):
@@ -90,27 +89,38 @@ def input_bone_index(player):
     while True:
         bone_index = input("Please select bone's index to go: ")
         if validate_bone(bone_index, player):
-            return bone_index
+            return int(bone_index)  # без int выдаст ошибку в функции move(player)
+
+
+# функция для самого первого хода: дубль или наибольшая кость
+def move_first(bone, player):
+    #global bones_on_table
+    player.remove(bone)
+    bones_on_table.append(bone)
 
 
 def move(player):
+    print_bones_on_table()  # перед тем как ходить, вывод костей на столе
     print_player(player)
     bone_index = input_bone_index(player)
-    player.remove(player[bone_index])
-    place_domino(player[bone_index], LEFT)
+    place_domino(player[bone_index], LEFT) # поменял местами, потому что если сперва удалят, то передается
+    player.remove(player[bone_index])       # в функцию place_domino уже другая кость, т.к. нужная была удалена
 
 
 def game_loop(players):
     bone, player_to_move = get_first_move_player(players)
+    move_first(bone, players[player_to_move])
     while True:
-        move(players[player_to_move])
-        player_to_move = (player_to_move + 1) % len(players)
+        player_to_move = (player_to_move + 1) % len(players)  # первый игрок уже пошел с дубля или наибольшей кости
+        move(players[player_to_move])                         # передаем ход сразу следующему
 
 
 def validate_bone(bone_index, player):
-    return bool(bones_on_table[LEFT][LEFT] in player[bone_index] or
-                bones_on_table[-RIGHT][RIGHT] in player[bone_index])
-
+    try:
+        return bool(bones_on_table[LEFT][LEFT] in player[int(bone_index)] or
+                    bones_on_table[-RIGHT][RIGHT] in player[int(bone_index)])
+    except:
+        return False
 
 """
 def validate_bone(bones_on_table, bones):
@@ -125,8 +135,8 @@ def validate_bone(bones_on_table, bones):
 
 
 def place_domino(bone, where):
-    if where == LEFT:
-        bones_on_table.insert(0, bone)
+    if not where == LEFT:
+        list(bones_on_table).insert(0, bone)
     else:
         bones_on_table.append(bone)
 
@@ -137,9 +147,6 @@ def sort_bone(bone):
 
 def print_bones_on_table():
     print("Current bones on table:\n", bones_on_table)
-
-
-players_dict = {}
 
 
 def add_player_to_dict_of_players():
@@ -164,12 +171,6 @@ def add_priority_to_dict_of_players():
         first_player_index += 1
 
 
-dominoes = get_dominoes()
-
-players_number = input_players_number()
-players_bones = get_players(players_number)  # list of lists of bones
-
-
 def is_bones_left(dominoes):
     return bool(dominoes)
 
@@ -179,3 +180,10 @@ def add_bone_to_player_if_miss(player):
         player.append(get_bones(NUMBER_OF_BONES_TO_TAKE)[0])
     else:
         raise ValueError("There are no bones left. You miss a go")
+
+
+dominoes = get_dominoes()
+players_number = input_players_number()
+shuffle_dominoes()
+players_bones = get_players(players_number)  # list of lists of bones
+game_loop(players_bones)
