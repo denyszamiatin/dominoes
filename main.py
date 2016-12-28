@@ -82,7 +82,7 @@ def print_player(player):
 def input_bone_index(player):
     while True:
         bone_index = input("Please select bone's index to go: ")
-        if validate_bone(bone_index):
+        if validate_bone(bone_index, player):
             return bone_index
 
 
@@ -100,19 +100,21 @@ def game_loop(players):
         player_to_move = (player_to_move + 1) % len(players)
 
 
+def validate_bone(bone_index, player):
+    return bool(bones_on_table[LEFT][LEFT] in player[bone_index] or
+                bones_on_table[-RIGHT][RIGHT] in player[bone_index])
+
+
+"""
 def validate_bone(bones_on_table, bones):
     left = bones_on_table[LEFT][LEFT]
     right = bones_on_table[-RIGHT][RIGHT]
     for index, points in enumerate(bones):  # если мы не используем index, то нам и не нужен enumerate
                                             # достаточно for points in bones:
                                             # почему bones? мы ведь одну кость передаем
-        if left or right in points:         # left or right нужно в скобки, иначе практически всегда будет True,
-                                            # т.к. сначала будет происходить логическое сравнение LEFT or RIGHT (что
-                                            # всегда будет возвращаться True, кроме случая LEFT и RIGHT = 0)
-                                            # и потом результат будет проверяться на вхождение в bones, что тоже чаще
-                                            # всего вернет TRUE. Таким образом функция может вернуть TRUE даже если кость
-                                            # не подходит
+        if left or right in points:         # Функция может вернуть TRUE даже если кость не подходит
             return True
+"""
 
 
 def place_domino(bone, where):
