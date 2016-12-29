@@ -101,11 +101,15 @@ def move_first(bone, player):
 
 def move(player):
     print_bones_on_table()  # перед тем как ходить, вывод костей на столе
-    print_player(player)
-    bone_index = input_bone_index(player)
-    bone, where = input_side(player[bone_index])
-    place_domino(bone, where)               # поменял местами, потому что если сперва удалят, то передается
-    player.remove(player[bone_index])       # в функцию place_domino уже другая кость, т.к. нужная была удалена
+    try:
+        check_player_before_move(player)
+        print_player(player)
+        bone_index = input_bone_index(player)
+        bone, where = input_side(player[bone_index])
+        place_domino(bone, where)               # поменял местами, потому что если сперва удалят, то передается
+        player.remove(player[bone_index])       # в функцию place_domino уже другая кость, т.к. нужная была удалена
+    except ValueError:
+        pass
 
 
 def input_side(bone):
@@ -142,12 +146,28 @@ def validate_side(bone, where):
             else:
                 return sort_bone(bone), LEFT
 
+
 def game_loop(players):
     bone, player_to_move = get_first_move_player(players)
     move_first(bone, players[player_to_move])
     while True:
         player_to_move = (player_to_move + 1) % len(players)  # первый игрок уже пошел с дубля или наибольшей кости
         move(players[player_to_move])                         # передаем ход сразу следующему
+
+
+def check_player_before_move(player):
+    for bone in player:
+        if bones_on_table[LEFT][LEFT] in bone:
+            return None
+    for bone in player:
+        if bones_on_table[-RIGHT][RIGHT] in bone:
+            return None
+    try:
+        print("You don't have any bone to move. Take one")
+        add_bone_to_player_if_miss(player)
+        check_player_before_move(player)
+    except ValueError:
+        raise ValueError
 
 
 def validate_bone(bone_index, player):
@@ -178,7 +198,7 @@ def place_domino(bone, where):
 
 def sort_bone(bone):
     return tuple(reversed(bone))
-    #return bone.reverse()
+    # return bone.reverse()
 
 
 def print_bones_on_table():
