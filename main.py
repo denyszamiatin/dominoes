@@ -71,7 +71,7 @@ def find_player_with_max_points(players):
         if max(bones) > max_bone:
             first_player = player
             max_bone = max(bones)
-    return max_bone, first_player # логика таже, что и функция выше
+    return max_bone, first_player  # логика таже, что и функция выше
 
 
 def get_first_move_player(players):
@@ -94,7 +94,7 @@ def input_bone_index(player):
 
 # функция для самого первого хода: дубль или наибольшая кость
 def move_first(bone, player):
-    #global bones_on_table
+    # global bones_on_table
     player.remove(bone)
     bones_on_table.append(bone)
 
@@ -103,9 +103,44 @@ def move(player):
     print_bones_on_table()  # перед тем как ходить, вывод костей на столе
     print_player(player)
     bone_index = input_bone_index(player)
-    place_domino(player[bone_index], LEFT) # поменял местами, потому что если сперва удалят, то передается
+    bone, where = input_side(player[bone_index])
+    place_domino(bone, where)               # поменял местами, потому что если сперва удалят, то передается
     player.remove(player[bone_index])       # в функцию place_domino уже другая кость, т.к. нужная была удалена
 
+
+def input_side(bone):
+    while True:
+        try:
+            where = int(input("Select the side\nLEFT - 0\nRIGHT - 1\n"))
+            if 0 <= where < 2:
+                return validate_side(bone, where)
+        except ValueError:
+            print('Invalid number')
+
+
+def validate_side(bone, where):
+    if where:
+        if bone[LEFT] == bones_on_table[-RIGHT][RIGHT]:
+            return bone, RIGHT
+        elif bone[RIGHT] == bones_on_table[-RIGHT][RIGHT]:
+            return sort_bone(bone), RIGHT
+        else:
+            print("Can't move right. Only left")
+            if bone[LEFT] == bones_on_table[LEFT][LEFT]:
+                return sort_bone(bone), LEFT
+            else:
+                return bone, LEFT
+    else:
+        if bone[LEFT] == bones_on_table[LEFT][LEFT]:
+            return sort_bone(bone), LEFT
+        elif bone[RIGHT] == bones_on_table[LEFT][LEFT]:
+            return bone, LEFT
+        else:
+            print("Can't move left. Only right")
+            if bone[LEFT] == bones_on_table[-RIGHT][RIGHT]:
+                return bone, LEFT
+            else:
+                return sort_bone(bone), LEFT
 
 def game_loop(players):
     bone, player_to_move = get_first_move_player(players)
@@ -135,14 +170,15 @@ def validate_bone(bones_on_table, bones):
 
 
 def place_domino(bone, where):
-    if not where == LEFT:
-        list(bones_on_table).insert(0, bone)
+    if not where:
+        bones_on_table.insert(LEFT, bone)
     else:
         bones_on_table.append(bone)
 
 
 def sort_bone(bone):
-    return bone.reverse()
+    return tuple(reversed(bone))
+    #return bone.reverse()
 
 
 def print_bones_on_table():
