@@ -218,6 +218,16 @@ def add_bone_to_player_if_miss(player):
         raise ValueError("There are no bones left. You miss a go")
 
 
+def remove_player_bone(bone_index, player):
+    for key in player.players_dict:
+        if bone_index == key:
+            player.players_dict.pop(key, None)
+        return None
+
+"""После того как игрок выбрал, какую кость выложить на стол, эту кость нееобходимо найти,
+удалить из словаря и добавить на стол, провести валидацию, что эта кость есть у игрока"""
+
+
 dominoes = get_dominoes()
 players_number = input_players_number()
 shuffle_dominoes()
